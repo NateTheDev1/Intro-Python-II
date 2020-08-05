@@ -93,6 +93,14 @@ def addItem(roomName, itemName):
             del room[roomName].items[i]
             break
 
+def dropItem(roomName, itemName):
+    for i, item in enumerate(player1.items):
+        if item.name == itemName:
+            room[roomName].items.append(player1.items[i])
+            player1.items[i].on_drop()
+            del player1.items[i]
+            break
+
 
 # Write a loop that:
 #
@@ -126,6 +134,15 @@ while not user == 'q':
             user = input("[i] Inventory   [n] Move North   [w] Move West   [s] Move South   [e] Move East   [q] Quit\n \n")
         except IndexError:
             print("What would you like to take?")
+            print("Missing ***[itemname]*** Please Try Again \n")
+            user = input("[i] Inventory   [n] Move North   [w] Move West   [s] Move South   [e] Move East   [q] Quit\n \n")
+    elif user.split()[0] == 'drop':
+        try:
+            item = user.split()[1]
+            dropItem(player1.location, item)
+            user = input("[i] Inventory   [n] Move North   [w] Move West   [s] Move South   [e] Move East   [q] Quit\n \n")
+        except IndexError:
+            print("What would you like to drop?")
             print("Missing ***[itemname]*** Please Try Again \n")
             user = input("[i] Inventory   [n] Move North   [w] Move West   [s] Move South   [e] Move East   [q] Quit\n \n")
     elif user == 'i':
